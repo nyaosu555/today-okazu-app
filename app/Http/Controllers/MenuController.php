@@ -125,9 +125,14 @@ class MenuController extends Controller
             // 権限がない場合は自動的に「catch」に入る
             $this->authorize('view', $menu);
 
-            $imagePath = $menu->image_path
-                    ? asset('storage/' . $menu->image_path)
-                    : asset('images/no_image.png');
+            // httpから始まる外部URLならそのまま使い、それ以外ならstorageを頭につける
+            if ($menu->image_path) {
+                $imagePath = str_starts_with($menu->image_path, 'http')
+                    ? $menu->image_path
+                    : asset('storage/' . $menu->image_path);
+            } else {
+                $imagePath = asset('images/no_image.png');
+            }
 
             // 登録フォームと同様に、セレクトボックスのデータを取得
             $types = Type::all();

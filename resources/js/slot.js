@@ -147,12 +147,18 @@ function setupSlot(elementId, category) {
         const rawPath = item.image_path;
         let imgPath = 'images/no_image.png';
 
-        if(rawPath) {
-            imgPath = `/storage/${rawPath}`;
+        if (rawPath) {
+            // httpから始まっている（URLである）場合はそのまま使う
+            if (rawPath.startsWith('http')) {
+                imgPath = rawPath;
+            } else {
+                // これまで通り、ユーザーがアップロードしたローカルの画像の場合
+                imgPath = `/storage/${rawPath}`;
+            }
         }
 
         // 「上下を暗くするグラデーション」をセット
-        li.style.backgroundImage = `url("${imgPath}")`;
+        li.style.backgroundImage = `url("${imgPath}"), url("/images/no_image.png")`;
         li.classList.add('slot-li');
         ul.appendChild(li);
     });

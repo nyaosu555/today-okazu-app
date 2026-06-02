@@ -268,12 +268,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.className = 'flex items-center gap-2 p-2 bg-white rounded border border-gray-200 shadow-sm text-sm';
 
                     // 画像があるかどうかの判定
-                    const imgSrc = menu.image_path ? `/storage/${menu.image_path}` : '/images/no_image.png';
+                    // httpから始まっている（URLである）場合はそのまま使い、それ以外は /storage/ を足す
+                    let imgSrc = '/images/no_image.png';
+                    if (menu.image_path) {
+                        imgSrc = menu.image_path.startsWith('http') ? menu.image_path : `/storage/${menu.image_path}`;
+                    }
 
                     card.innerHTML = `
-                        <img src="${imgSrc}" class="w-10 h-10 object-cover rounded-md border border-gray-100 shrink-0" alt="">
-                        <span class="font-medium text-gray-700 break-all">${menu.name}</span>
-                    `;
+    <img src="${imgSrc}"
+         onerror="this.onerror=null; this.src='/images/no_image.png';"
+         class="w-10 h-10 object-cover rounded-md border border-gray-100 shrink-0"
+         alt="">
+    <span class="font-medium text-gray-700 break-all">${menu.name}</span>
+`;
                     listContainer.appendChild(card);
                 });
             })

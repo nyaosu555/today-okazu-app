@@ -4,12 +4,14 @@
             <div class="flex flex-col flex-grow w-full bg-[#FDF2C4] rounded-2xl shadow-sm border border-orange-100 overflow-hidden relative group hover:shadow-md transition duration-200">
 
                 <div class="w-full aspect-[16/10] bg-white overflow-hidden relative border-b border-orange-900/5">
-                    @if($menu->image_path)
-                        <img src="{{ asset('storage/' . $menu->image_path) }}" class="w-full h-full object-cover group-hover:scale-102 transition duration-300">
-                    @else
-                        <img src="{{ asset('images/no_image.png') }}" class="w-full h-full object-cover">
-                    @endif
-                </div>
+    @if($menu->image_path)
+        <img src="{{ str_starts_with($menu->image_path, 'http') ? $menu->image_path : asset('storage/' . $menu->image_path) }}"
+     onerror="this.onerror=null; this.src='{{ asset('images/no_image.png') }}';"
+     class="w-full h-full object-cover group-hover:scale-102 transition duration-300">
+    @else
+        <img src="{{ asset('images/no_image.png') }}" class="w-full h-full object-cover">
+    @endif
+</div>
 
                 <div class="p-4 flex flex-col flex-grow justify-between gap-3">
 

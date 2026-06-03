@@ -14,6 +14,7 @@ console_command = 'php /var/www/html/artisan tinker'
 
 [env]
   APP_ENV = 'production'
+  APP_NAME = '今日のおかずなんにしよ'
   APP_URL = 'https://today-okazu-app.fly.dev'
   APP_LOCALE = 'ja'
   APP_TIMEZONE = 'Asia/Tokyo'

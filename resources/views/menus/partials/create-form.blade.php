@@ -24,6 +24,15 @@
             </p>
             <div id="similar-menus-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-amber-50/50 p-3 rounded-lg border border-amber-200">
             </div>
+            <template id="similar-menu-template">
+                <div class="flex items-center gap-2 p-2 bg-white rounded border border-gray-200 shadow-sm text-sm">
+                    <img src=""
+                        class="w-10 h-10 object-cover rounded-md border border-gray-100 shrink-0"
+                        alt=""
+                    >
+                    <span class="font-medium text-gray-700 break-all"></span>
+                </div>
+            </template>
         </div>
     </div>
 

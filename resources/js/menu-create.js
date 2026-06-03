@@ -264,24 +264,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 取得したメニューの数だけカード（HTML）を生成
                 menus.forEach(menu => {
-                    const card = document.createElement('div');
-                    card.className = 'flex items-center gap-2 p-2 bg-white rounded border border-gray-200 shadow-sm text-sm';
+                    // Bladeに用意した「お手本（template）」を読み込む
+                    const template = document.getElementById('similar-menu-template');
 
-                    // 画像があるかどうかの判定
-                    // httpから始まっている（URLである）場合はそのまま使い、それ以外は /storage/ を足す
+                    // お手本を丸ごとコピー（クローン）する
+                    const clone = template.content.cloneNode(true);
+
+                    // コピーしたパーツの中から、画像(img)と文字(span)を見つける
+                    const cardImg = clone.querySelector('img');
+                    const cardName = clone.querySelector('span');
+
+                    // 画像URLの判定ロジック（★今までのものをそのまま活用！）
                     let imgSrc = '/images/no_image.png';
                     if (menu.image_path) {
                         imgSrc = menu.image_path.startsWith('http') ? menu.image_path : `/storage/${menu.image_path}`;
                     }
 
-                    card.innerHTML = `
-    <img src="${imgSrc}"
-         onerror="this.onerror=null; this.src='/images/no_image.png';"
-         class="w-10 h-10 object-cover rounded-md border border-gray-100 shrink-0"
-         alt="">
-    <span class="font-medium text-gray-700 break-all">${menu.name}</span>
-`;
-                    listContainer.appendChild(card);
+                    // 見つけた要素にデータを流し込む
+                    cardImg.src = imgSrc;
+                    cardImg.onerror = function() {
+                        this.onerror = null;
+                        this.src = '/images/no_image.png';
+                    };
+                    cardName.textContent = menu.name; // 安全にテキストを代入
+
+                    // 出来上がったカードをリストに追加する
+                    listContainer.appendChild(clone);
                 });
             })
             .catch(error => {

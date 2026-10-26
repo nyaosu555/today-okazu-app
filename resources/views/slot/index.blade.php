@@ -63,7 +63,7 @@
         <x-sub-navigation current="slot" />
     </div>
     @push('scripts')
-        {{-- JavaScript側にPHPのEnum値を定数として渡す --}}
+        {{-- JavaScript側にPHPのEnum値を定数として渡す！ --}}
         <script>
             window.MENU_TYPES = {
                 MAIN: {{ \App\Enums\MenuType::Main->value }},
